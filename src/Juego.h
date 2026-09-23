@@ -34,6 +34,8 @@ public:
     void jugarRonda();
 
     void mostrarEstadoJugadores();
+
+    void reponerCartas();
 };
 
 #endif

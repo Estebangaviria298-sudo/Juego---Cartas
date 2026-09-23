@@ -18,6 +18,7 @@ void Juego::iniciar()
     mazo.crearMazo();
     mazo.barajar();
 
+    // Repartir 4 cartas a cada jugador al comenzar el juego
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
@@ -36,6 +37,9 @@ void Juego::iniciar()
 
     while (continuar)
     {
+        // Reponer cartas antes de comenzar la ronda
+        reponerCartas();
+
         cout << "\n==========================" << endl;
         cout << "         RONDA "
              << numeroRonda
@@ -205,8 +209,7 @@ void Juego::determinarGanador()
          i < cartasJugadas.size();
          i++)
     {
-        puntosRonda +=
-            cartasJugadas[i].getNumero();
+        puntosRonda += cartasJugadas[i].getNumero();
     }
 
     jugadores[jugadorGanador].sumarPuntos(puntosRonda);
@@ -271,5 +274,28 @@ void Juego::mostrarEstadoJugadores()
         cout << "Puntos: "
              << jugadores[i].getPuntos()
              << endl;
+    }
+}
+
+void Juego::reponerCartas()
+{
+    cout << "\n--- REPOSICION DE CARTAS ---" << endl;
+
+    for (int i = 0; i < 4; i++)
+    {
+        while (jugadores[i].cantidadCartas() < 4 &&
+               mazo.cantidadCartas() > 0)
+        {
+            Carta carta = mazo.sacarCarta();
+
+            jugadores[i].recibirCarta(carta);
+
+            cout << jugadores[i].getNombre()
+                 << " recibe: "
+                 << carta.getNumero()
+                 << " - "
+                 << carta.getColor()
+                 << endl;
+        }
     }
 }
