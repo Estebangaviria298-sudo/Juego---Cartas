@@ -63,3 +63,21 @@ int Jugador::getPuntos()
 {
     return puntos;
 }
+
+void Jugador::recibirCartaGanada(Carta carta)
+{
+    cartasGanadas.push_back(carta);
+}
+
+void Jugador::mostrarCartasGanadas()
+{
+    cout << "Cartas ganadas por " << nombre << ":" << endl;
+
+    for (int i = 0; i < cartasGanadas.size(); i++)
+    {
+        cout << cartasGanadas[i].getNumero()
+             << " - "
+             << cartasGanadas[i].getColor()
+             << endl;
+    }
+}
