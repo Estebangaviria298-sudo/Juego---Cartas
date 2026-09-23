@@ -12,6 +12,7 @@ class Jugador
 private:
     string nombre;
     vector<Carta> mano;
+    int puntos;
 
 public:
     Jugador();
@@ -28,6 +29,10 @@ public:
     int cantidadCartas();
 
     Carta obtenerCarta(int posicion);
+
+    void sumarPuntos(int cantidad);
+
+    int getPuntos();
 };
 
 #endif

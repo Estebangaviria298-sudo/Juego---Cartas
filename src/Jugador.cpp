@@ -4,11 +4,13 @@
 Jugador::Jugador()
 {
     nombre = "";
+    puntos = 0;
 }
 
 Jugador::Jugador(string nombre)
 {
     this->nombre = nombre;
+    puntos = 0;
 }
 
 string Jugador::getNombre()
@@ -50,4 +52,14 @@ int Jugador::cantidadCartas()
 Carta Jugador::obtenerCarta(int posicion)
 {
     return mano[posicion];
+}
+
+void Jugador::sumarPuntos(int cantidad)
+{
+    puntos += cantidad;
+}
+
+int Jugador::getPuntos()
+{
+    return puntos;
 }

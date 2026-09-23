@@ -4,6 +4,7 @@
 #include "Jugador.h"
 #include "Mazo.h"
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -16,6 +17,9 @@ private:
     string colorSolicitado;
     string definicion;
 
+    vector<Carta> cartasJugadas;
+    vector<int> jugadoresQueJugaron;
+
 public:
     Juego();
 
@@ -24,6 +28,8 @@ public:
     void solicitarCondicion();
 
     void determinarGanador();
+
+    void jugarRonda();
 };
 
 #endif

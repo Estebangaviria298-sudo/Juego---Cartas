@@ -34,7 +34,8 @@ void Juego::iniciar()
          << mazo.cantidadCartas() << endl;
 
     solicitarCondicion();
-    determinarGanador();
+
+    jugarRonda();
 }
 
 void Juego::solicitarCondicion()
@@ -49,48 +50,116 @@ void Juego::solicitarCondicion()
          << colorSolicitado << " " << definicion << endl;
 }
 
-void Juego::determinarGanador()
+void Juego::jugarRonda()
 {
-    Carta mejorCarta;
-    string nombreGanador = "";
-    bool primeraCarta = true;
+    cartasJugadas.clear();
+    jugadoresQueJugaron.clear();
+
+    cout << "\n--- CARTAS JUGADAS ---" << endl;
 
     for (int i = 0; i < 4; i++)
     {
+        bool encontroCarta = false;
+
         for (int j = 0; j < jugadores[i].cantidadCartas(); j++)
         {
             Carta carta = jugadores[i].obtenerCarta(j);
 
             if (carta.getColor() == colorSolicitado)
             {
-                if (primeraCarta)
-                {
-                    mejorCarta = carta;
-                    nombreGanador = jugadores[i].getNombre();
-                    primeraCarta = false;
-                }
-                else if (definicion == "bajo" &&
-                         carta.getNumero() < mejorCarta.getNumero())
-                {
-                    mejorCarta = carta;
-                    nombreGanador = jugadores[i].getNombre();
-                }
-                else if (definicion == "alto" &&
-                         carta.getNumero() > mejorCarta.getNumero())
-                {
-                    mejorCarta = carta;
-                    nombreGanador = jugadores[i].getNombre();
-                }
+                Carta cartaJugadas = jugadores[i].jugarCarta(j);
+
+                cartasJugadas.push_back(cartaJugadas);
+                jugadoresQueJugaron.push_back(i);
+
+                cout << jugadores[i].getNombre()
+                     << " juega: "
+                     << cartaJugadas.getNumero()
+                     << " - "
+                     << cartaJugadas.getColor()
+                     << endl;
+
+                encontroCarta = true;
+                break;
             }
+        }
+
+        if (!encontroCarta)
+        {
+            cout << jugadores[i].getNombre()
+                 << " no tiene una carta "
+                 << colorSolicitado << endl;
         }
     }
 
-    if (!primeraCarta)
-    {
-        cout << "\nGanador: " << nombreGanador << endl;
+    determinarGanador();
 
-        cout << "Carta ganadora: "
-             << mejorCarta.getNumero() << " - "
-             << mejorCarta.getColor() << endl;
+    cout << "\n--- MANOS DESPUES DE JUGAR ---" << endl;
+
+    for (int i = 0; i < 4; i++)
+    {
+        jugadores[i].mostrarMano();
+        cout << endl;
     }
+}
+
+void Juego::determinarGanador()
+{
+    if (cartasJugadas.size() == 0)
+    {
+        cout << "\nNo se jugaron cartas." << endl;
+        return;
+    }
+
+    int posicionGanadora = 0;
+
+    for (int i = 1; i < cartasJugadas.size(); i++)
+    {
+        if (definicion == "bajo" &&
+            cartasJugadas[i].getNumero() <
+            cartasJugadas[posicionGanadora].getNumero())
+        {
+            posicionGanadora = i;
+        }
+
+        if (definicion == "alto" &&
+            cartasJugadas[i].getNumero() >
+            cartasJugadas[posicionGanadora].getNumero())
+        {
+            posicionGanadora = i;
+        }
+    }
+
+    int jugadorGanador = jugadoresQueJugaron[posicionGanadora];
+
+    int puntosRonda = 0;
+
+    for (int i = 0; i < cartasJugadas.size(); i++)
+    {
+        puntosRonda += cartasJugadas[i].getNumero();
+    }
+
+    jugadores[jugadorGanador].sumarPuntos(puntosRonda);
+
+    cout << "\n--- GANADOR ---" << endl;
+
+    cout << "Ganador: "
+         << jugadores[jugadorGanador].getNombre()
+         << endl;
+
+    cout << "Carta ganadora: "
+         << cartasJugadas[posicionGanadora].getNumero()
+         << " - "
+         << cartasJugadas[posicionGanadora].getColor()
+         << endl;
+
+    cout << "Puntos de la ronda: "
+         << puntosRonda
+         << endl;
+
+    cout << "Puntos acumulados de "
+         << jugadores[jugadorGanador].getNombre()
+         << ": "
+         << jugadores[jugadorGanador].getPuntos()
+         << endl;
 }
