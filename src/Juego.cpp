@@ -173,6 +173,8 @@ void Juego::jugarRonda()
     cout << "\nCartas restantes en el mazo: "
          << mazo.cantidadCartas()
          << endl;
+
+    mostrarResumenRonda();
 }
 
 void Juego::determinarGanador()
@@ -304,4 +306,67 @@ void Juego::reponerCartas()
                  << endl;
         }
     }
+}
+
+void Juego::mostrarResumenRonda()
+{
+    cout << "\n==========================" << endl;
+    cout << "     RESUMEN DE RONDA" << endl;
+    cout << "==========================" << endl;
+
+    cout << "Ronda: "
+         << numeroRonda
+         << endl;
+
+    cout << "Condicion: "
+         << colorSolicitado
+         << " "
+         << definicion
+         << endl;
+
+    if (cartasJugadas.size() > 0)
+    {
+        int posicionGanadora = 0;
+
+        for (int i = 1;
+             i < cartasJugadas.size();
+             i++)
+        {
+            if (definicion == "bajo" &&
+                cartasJugadas[i].getNumero() <
+                cartasJugadas[posicionGanadora].getNumero())
+            {
+                posicionGanadora = i;
+            }
+
+            if (definicion == "alto" &&
+                cartasJugadas[i].getNumero() >
+                cartasJugadas[posicionGanadora].getNumero())
+            {
+                posicionGanadora = i;
+            }
+        }
+
+        int jugadorGanador =
+            jugadoresQueJugaron[posicionGanadora];
+
+        cout << "Ganador: "
+             << jugadores[jugadorGanador].getNombre()
+             << endl;
+
+        cout << "Carta ganadora: "
+             << cartasJugadas[posicionGanadora].getNumero()
+             << " - "
+             << cartasJugadas[posicionGanadora].getColor()
+             << endl;
+    }
+    else
+    {
+        cout << "No hubo cartas jugadas."
+             << endl;
+    }
+
+    cout << "Cartas restantes en el mazo: "
+         << mazo.cantidadCartas()
+         << endl;
 }

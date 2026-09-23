@@ -36,6 +36,8 @@ public:
     void mostrarEstadoJugadores();
 
     void reponerCartas();
+
+    void mostrarResumenRonda();
 };
 
 #endif
