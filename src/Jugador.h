@@ -24,6 +24,10 @@ public:
     void mostrarMano();
 
     Carta jugarCarta(int posicion);
+
+    int cantidadCartas();
+
+    Carta obtenerCarta(int posicion);
 };
 
 #endif

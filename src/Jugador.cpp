@@ -41,3 +41,13 @@ Carta Jugador::jugarCarta(int posicion)
 
     return carta;
 }
+
+int Jugador::cantidadCartas()
+{
+    return mano.size();
+}
+
+Carta Jugador::obtenerCarta(int posicion)
+{
+    return mano[posicion];
+}
