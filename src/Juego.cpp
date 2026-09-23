@@ -101,6 +101,17 @@ void Juego::jugarRonda()
         jugadores[i].mostrarMano();
         cout << endl;
     }
+
+    cout << "\n--- CARTAS GANADAS ---" << endl;
+
+    for (int i = 0; i < 4; i++)
+    {
+        if (jugadores[i].getPuntos() > 0)
+        {
+            jugadores[i].mostrarCartasGanadas();
+            cout << endl;
+        }
+    }
 }
 
 void Juego::determinarGanador()
@@ -137,6 +148,11 @@ void Juego::determinarGanador()
     for (int i = 0; i < cartasJugadas.size(); i++)
     {
         puntosRonda += cartasJugadas[i].getNumero();
+    }
+
+    for (int i = 0; i < cartasJugadas.size(); i++)
+    {
+        jugadores[jugadorGanador].recibirCartaGanada(cartasJugadas[i]);
     }
 
     jugadores[jugadorGanador].sumarPuntos(puntosRonda);
