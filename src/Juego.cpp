@@ -169,6 +169,10 @@ void Juego::jugarRonda()
     determinarGanador();
 
     mostrarEstadoJugadores();
+
+    cout << "\nCartas restantes en el mazo: "
+         << mazo.cantidadCartas()
+         << endl;
 }
 
 void Juego::determinarGanador()
