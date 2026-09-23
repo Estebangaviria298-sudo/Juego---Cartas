@@ -40,14 +40,35 @@ void Juego::iniciar()
 
 void Juego::solicitarCondicion()
 {
-    cout << "\nIngrese el color solicitado (rojo/azul): ";
-    cin >> colorSolicitado;
+    bool condicionValida = false;
 
-    cout << "Ingrese la definicion (bajo/alto): ";
-    cin >> definicion;
+    while (!condicionValida)
+    {
+        cout << "\nIngrese el color solicitado (rojo/azul): ";
+        cin >> colorSolicitado;
+
+        cout << "Ingrese la definicion (bajo/alto): ";
+        cin >> definicion;
+
+        if ((colorSolicitado == "rojo" || colorSolicitado == "azul") &&
+            (definicion == "bajo" || definicion == "alto"))
+        {
+            condicionValida = true;
+        }
+        else
+        {
+            cout << "\nCondicion no valida." << endl;
+            cout << "Use solamente:" << endl;
+            cout << "rojo bajo" << endl;
+            cout << "rojo alto" << endl;
+            cout << "azul bajo" << endl;
+            cout << "azul alto" << endl;
+        }
+    }
 
     cout << "\nCondicion seleccionada: "
-         << colorSolicitado << " " << definicion << endl;
+         << colorSolicitado << " "
+         << definicion << endl;
 }
 
 void Juego::jugarRonda()
@@ -141,6 +162,11 @@ void Juego::determinarGanador()
 
     jugadores[jugadorGanador].sumarPuntos(puntosRonda);
 
+    for (int i = 0; i < cartasJugadas.size(); i++)
+    {
+        jugadores[jugadorGanador].recibirCartaGanada(cartasJugadas[i]);
+    }
+
     cout << "\n--- GANADOR ---" << endl;
 
     cout << "Ganador: "
@@ -162,4 +188,15 @@ void Juego::determinarGanador()
          << ": "
          << jugadores[jugadorGanador].getPuntos()
          << endl;
+
+    cout << "\n--- CARTAS GANADAS ---" << endl;
+
+    for (int i = 0; i < 4; i++)
+    {
+        if (jugadores[i].getPuntos() > 0)
+        {
+            jugadores[i].mostrarCartasGanadas();
+            cout << endl;
+        }
+    }
 }
