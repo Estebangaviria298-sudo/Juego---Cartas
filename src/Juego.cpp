@@ -271,6 +271,8 @@ void Juego::mostrarEstadoJugadores()
              << jugadores[i].cantidadCartas()
              << endl;
 
+        jugadores[i].mostrarMano();
+
         cout << "Puntos: "
              << jugadores[i].getPuntos()
              << endl;
