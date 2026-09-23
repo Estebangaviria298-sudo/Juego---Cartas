@@ -37,6 +37,11 @@ void Jugador::mostrarMano()
 
 Carta Jugador::jugarCarta(int posicion)
 {
+    if (posicion < 0 || posicion >= mano.size())
+    {
+        return Carta();
+    }
+
     Carta carta = mano[posicion];
 
     mano.erase(mano.begin() + posicion);
