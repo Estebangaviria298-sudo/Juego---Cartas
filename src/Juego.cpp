@@ -9,6 +9,8 @@ Juego::Juego()
     jugadores[1] = Jugador("Jugador 2");
     jugadores[2] = Jugador("Jugador 3");
     jugadores[3] = Jugador("Jugador 4");
+
+    numeroRonda = 1;
 }
 
 void Juego::iniciar()
@@ -24,18 +26,55 @@ void Juego::iniciar()
         }
     }
 
-    for (int i = 0; i < 4; i++)
+    mostrarEstadoJugadores();
+
+    cout << "\nCartas restantes en el mazo: "
+         << mazo.cantidadCartas()
+         << endl;
+
+    bool continuar = true;
+
+    while (continuar)
     {
-        jugadores[i].mostrarMano();
-        cout << endl;
+        cout << "\n==========================" << endl;
+        cout << "         RONDA "
+             << numeroRonda
+             << endl;
+        cout << "==========================" << endl;
+
+        solicitarCondicion();
+
+        jugarRonda();
+
+        char respuesta;
+
+        cout << "\nDesea jugar otra ronda? (s/n): ";
+        cin >> respuesta;
+
+        if (respuesta == 's' || respuesta == 'S')
+        {
+            numeroRonda++;
+        }
+        else
+        {
+            continuar = false;
+        }
     }
 
-    cout << "Cartas restantes en el mazo: "
-         << mazo.cantidadCartas() << endl;
+    cout << "\n==========================" << endl;
+    cout << "       FIN DEL JUEGO" << endl;
+    cout << "==========================" << endl;
 
-    solicitarCondicion();
+    cout << "\nPuntajes finales:" << endl;
 
-    jugarRonda();
+    for (int i = 0; i < 4; i++)
+    {
+        cout << jugadores[i].getNombre()
+             << ": "
+             << jugadores[i].getPuntos()
+             << " puntos"
+             << endl;
+    }
 }
 
 void Juego::solicitarCondicion()
@@ -50,14 +89,17 @@ void Juego::solicitarCondicion()
         cout << "Ingrese la definicion (bajo/alto): ";
         cin >> definicion;
 
-        if ((colorSolicitado == "rojo" || colorSolicitado == "azul") &&
-            (definicion == "bajo" || definicion == "alto"))
+        if ((colorSolicitado == "rojo" ||
+             colorSolicitado == "azul") &&
+            (definicion == "bajo" ||
+             definicion == "alto"))
         {
             condicionValida = true;
         }
         else
         {
             cout << "\nCondicion no valida." << endl;
+
             cout << "Use solamente:" << endl;
             cout << "rojo bajo" << endl;
             cout << "rojo alto" << endl;
@@ -67,8 +109,10 @@ void Juego::solicitarCondicion()
     }
 
     cout << "\nCondicion seleccionada: "
-         << colorSolicitado << " "
-         << definicion << endl;
+         << colorSolicitado
+         << " "
+         << definicion
+         << endl;
 }
 
 void Juego::jugarRonda()
@@ -82,13 +126,16 @@ void Juego::jugarRonda()
     {
         bool encontroCarta = false;
 
-        for (int j = 0; j < jugadores[i].cantidadCartas(); j++)
+        for (int j = 0;
+             j < jugadores[i].cantidadCartas();
+             j++)
         {
             Carta carta = jugadores[i].obtenerCarta(j);
 
             if (carta.getColor() == colorSolicitado)
             {
-                Carta cartaJugadas = jugadores[i].jugarCarta(j);
+                Carta cartaJugadas =
+                    jugadores[i].jugarCarta(j);
 
                 cartasJugadas.push_back(cartaJugadas);
                 jugadoresQueJugaron.push_back(i);
@@ -101,6 +148,7 @@ void Juego::jugarRonda()
                      << endl;
 
                 encontroCarta = true;
+
                 break;
             }
         }
@@ -109,19 +157,14 @@ void Juego::jugarRonda()
         {
             cout << jugadores[i].getNombre()
                  << " no tiene una carta "
-                 << colorSolicitado << endl;
+                 << colorSolicitado
+                 << endl;
         }
     }
 
     determinarGanador();
 
-    cout << "\n--- MANOS DESPUES DE JUGAR ---" << endl;
-
-    for (int i = 0; i < 4; i++)
-    {
-        jugadores[i].mostrarMano();
-        cout << endl;
-    }
+    mostrarEstadoJugadores();
 }
 
 void Juego::determinarGanador()
@@ -134,7 +177,9 @@ void Juego::determinarGanador()
 
     int posicionGanadora = 0;
 
-    for (int i = 1; i < cartasJugadas.size(); i++)
+    for (int i = 1;
+         i < cartasJugadas.size();
+         i++)
     {
         if (definicion == "bajo" &&
             cartasJugadas[i].getNumero() <
@@ -151,20 +196,27 @@ void Juego::determinarGanador()
         }
     }
 
-    int jugadorGanador = jugadoresQueJugaron[posicionGanadora];
+    int jugadorGanador =
+        jugadoresQueJugaron[posicionGanadora];
 
     int puntosRonda = 0;
 
-    for (int i = 0; i < cartasJugadas.size(); i++)
+    for (int i = 0;
+         i < cartasJugadas.size();
+         i++)
     {
-        puntosRonda += cartasJugadas[i].getNumero();
+        puntosRonda +=
+            cartasJugadas[i].getNumero();
     }
 
     jugadores[jugadorGanador].sumarPuntos(puntosRonda);
 
-    for (int i = 0; i < cartasJugadas.size(); i++)
+    for (int i = 0;
+         i < cartasJugadas.size();
+         i++)
     {
-        jugadores[jugadorGanador].recibirCartaGanada(cartasJugadas[i]);
+        jugadores[jugadorGanador]
+            .recibirCartaGanada(cartasJugadas[i]);
     }
 
     cout << "\n--- GANADOR ---" << endl;
@@ -198,5 +250,26 @@ void Juego::determinarGanador()
             jugadores[i].mostrarCartasGanadas();
             cout << endl;
         }
+    }
+}
+
+void Juego::mostrarEstadoJugadores()
+{
+    cout << "\n--- ESTADO DE LOS JUGADORES ---"
+         << endl;
+
+    for (int i = 0; i < 4; i++)
+    {
+        cout << "\nJugador: "
+             << jugadores[i].getNombre()
+             << endl;
+
+        cout << "Cartas en mano: "
+             << jugadores[i].cantidadCartas()
+             << endl;
+
+        cout << "Puntos: "
+             << jugadores[i].getPuntos()
+             << endl;
     }
 }

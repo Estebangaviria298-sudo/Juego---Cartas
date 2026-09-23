@@ -20,6 +20,8 @@ private:
     vector<Carta> cartasJugadas;
     vector<int> jugadoresQueJugaron;
 
+    int numeroRonda;
+
 public:
     Juego();
 
@@ -30,6 +32,8 @@ public:
     void determinarGanador();
 
     void jugarRonda();
+
+    void mostrarEstadoJugadores();
 };
 
 #endif
