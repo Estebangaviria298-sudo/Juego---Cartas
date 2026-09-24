@@ -38,6 +38,8 @@ public:
     void reponerCartas();
 
     void mostrarResumenRonda();
+
+    void mostrarTablaPuntajes();
 };
 
 #endif

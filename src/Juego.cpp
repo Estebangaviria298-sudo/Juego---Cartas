@@ -175,6 +175,8 @@ void Juego::jugarRonda()
          << endl;
 
     mostrarResumenRonda();
+
+    mostrarTablaPuntajes();
 }
 
 void Juego::determinarGanador()
@@ -369,4 +371,20 @@ void Juego::mostrarResumenRonda()
     cout << "Cartas restantes en el mazo: "
          << mazo.cantidadCartas()
          << endl;
+}
+
+void Juego::mostrarTablaPuntajes()
+{
+    cout << "\n==========================" << endl;
+    cout << "      TABLA DE PUNTAJES" << endl;
+    cout << "==========================" << endl;
+
+    for (int i = 0; i < 4; i++)
+    {
+        cout << jugadores[i].getNombre()
+             << ": "
+             << jugadores[i].getPuntos()
+             << " puntos"
+             << endl;
+    }
 }
