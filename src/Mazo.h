@@ -23,6 +23,10 @@ public:
     void barajar();
 
     Carta sacarCarta();
+
+    vector<Carta> getCartas();
+
+    void cargarCartas(vector<Carta> cartas);
 };
 
 #endif

@@ -45,3 +45,13 @@ Carta Mazo::sacarCarta()
 
     return carta;
 }
+
+vector<Carta> Mazo::getCartas()
+{
+    return cartas;
+}
+
+void Mazo::cargarCartas(vector<Carta> cartas)
+{
+    this->cartas = cartas;
+}
