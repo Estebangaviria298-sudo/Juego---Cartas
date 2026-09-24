@@ -40,6 +40,10 @@ public:
     void mostrarResumenRonda();
 
     void mostrarTablaPuntajes();
+
+    void guardarPartida();
+
+    void cargarPartida();
 };
 
 #endif
