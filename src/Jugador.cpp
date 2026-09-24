@@ -86,3 +86,24 @@ void Jugador::mostrarCartasGanadas()
              << endl;
     }
 }
+
+vector<Carta> Jugador::getMano()
+{
+    return mano;
+}
+
+vector<Carta> Jugador::getCartasGanadas()
+{
+    return cartasGanadas;
+}
+
+void Jugador::cargarDatos(string nombre,
+                          int puntos,
+                          vector<Carta> mano,
+                          vector<Carta> cartasGanadas)
+{
+    this->nombre = nombre;
+    this->puntos = puntos;
+    this->mano = mano;
+    this->cartasGanadas = cartasGanadas;
+}

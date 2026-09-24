@@ -38,6 +38,14 @@ public:
     void recibirCartaGanada(Carta carta);
 
     void mostrarCartasGanadas();
+
+    vector<Carta> getMano();
+
+    vector<Carta> getCartasGanadas();
+
+    void cargarDatos(string nombre, int puntos,
+                     vector<Carta> mano,
+                     vector<Carta> cartasGanadas);
 };
 
 #endif
